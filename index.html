@@ -1,23 +1,39 @@
-<section id="memories" class="memories"></section>
-function renderMemories(stepKey) {
-  const mem = config.memories?.[stepKey];
-  const root = document.getElementById("memories");
-  if (!root) return;
+<!doctype html>
+<html lang="ne">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="pageTitle">मेरो भ्यालेन्टाइन बनिदिन्छौ? 💝</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div id="floatLayer" class="float-layer"></div>
+  </div>
 
-  if (!mem) { root.innerHTML = ""; return; }
+  <main class="wrap">
+    <section class="card" id="app">
+      <header class="hero">
+        <h1 class="h1" id="heroTitle">मेरो भ्यालेन्टाइन बनिदिन्छौ? 💝</h1>
+        <p class="sub" id="heroSub">तिमीलाई एउटा सानो, प्यारो प्रश्न...</p>
+      </header>
 
-  const cards = (mem.items || []).map(it => `
-    <figure class="mem-card">
-      <img src="${it.img}" alt="${it.caption || ''}" loading="lazy">
-      <figcaption>${it.caption || ""}</figcaption>
-    </figure>
-  `).join("");
+      <section class="panel" id="panel">
+        <!-- Step content injected here -->
+      </section>
 
-  root.innerHTML = `
-    <div class="mem-head">
-      <h2>${mem.title || ""}</h2>
-      <p class="mem-quote">${mem.quote || ""}</p>
-    </div>
-    <div class="mem-grid">${cards}</div>
-  `;
-}
+      <section id="memories" class="memories" aria-live="polite"></section>
+
+      <footer class="footer">
+        <button class="music-btn" id="musicBtn" type="button" hidden>🎵 संगीत बजाऊ</button>
+        <small class="tiny" id="tinyNote">Made with love.</small>
+      </footer>
+    </section>
+  </main>
+
+  <audio id="bgm" preload="auto" loop></audio>
+
+  <script src="./config.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
