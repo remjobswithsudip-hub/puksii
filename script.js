@@ -18,12 +18,15 @@ function applyTheme() {
   document.documentElement.style.setProperty("--accent2", c.colors.buttonHover);
   document.documentElement.style.setProperty("--text", c.colors.textColor);
 
-  $("pageTitle").textContent = c.pageTitle;
+  const t = $("pageTitle");
+  if (t) t.textContent = c.pageTitle;
   document.title = c.pageTitle;
+
   $("heroTitle").textContent = c.pageTitle;
   $("heroSub").textContent = `${c.valentineName} ❤️`;
 }
 
+/* Background floaters (whole page) */
 function spawnFloaters() {
   const layer = $("floatLayer");
   if (!layer) return;
@@ -91,54 +94,53 @@ function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","�
   }
 }
 
-/* Floating hearts INSIDE memories div */
-function mountMemFloatLayer(){
-  const root = $("memories");
-  if (!root) return null;
+/* HERO floating hearts around title */
+function mountHeroFloatLayer(){
+  const hero = document.querySelector(".hero");
+  if (!hero) return null;
 
-  let layer = root.querySelector(".mem-float-layer");
+  let layer = hero.querySelector(".hero-float-layer");
   if (!layer){
     layer = document.createElement("div");
-    layer.className = "mem-float-layer";
-    root.prepend(layer);
+    layer.className = "hero-float-layer";
+    hero.prepend(layer);
   }
   return layer;
 }
 
-function spawnMemHearts(){
+function spawnHeroHearts(){
   if (!motionOk()) return;
 
-  const root = $("memories");
-  if (!root || !root.innerHTML.trim()) return;
-
-  const layer = mountMemFloatLayer();
+  const layer = mountHeroFloatLayer();
   if (!layer) return;
 
   layer.innerHTML = "";
   const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕","💗"]);
 
-  const count = 26;
+  const count = 16;
   for (let i = 0; i < count; i++){
     const el = document.createElement("div");
-    el.className = "mem-float";
+    el.className = "hero-float";
     el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
 
     const x = Math.floor(Math.random()*100);
-    const dx = (Math.random()*2 - 1) * 90;
-    const t = (5 + Math.random()*6).toFixed(2) + "s";
-    const s = (14 + Math.random()*20).toFixed(0) + "px";
-    const delay = (-Math.random()*7).toFixed(2) + "s";
+    const y = Math.floor(Math.random()*100);
+    const dx = (Math.random()*2 - 1) * 26;
+    const dy = (Math.random()*2 - 1) * 18;
+    const t = (2.8 + Math.random()*2.8).toFixed(2) + "s";
+    const s = (16 + Math.random()*22).toFixed(0) + "px";
 
     const h = Math.floor(Math.random()*360) + "deg";
-    const hc = (2.8 + Math.random()*4.5).toFixed(2) + "s";
+    const hc = (2.4 + Math.random()*4.0).toFixed(2) + "s";
 
     el.style.setProperty("--x", x + "%");
+    el.style.setProperty("--y", y + "%");
     el.style.setProperty("--dx", dx.toFixed(0) + "px");
+    el.style.setProperty("--dy", dy.toFixed(0) + "px");
     el.style.setProperty("--t", t);
     el.style.setProperty("--s", s);
     el.style.setProperty("--h", h);
     el.style.setProperty("--hc", hc);
-    el.style.animationDelay = delay;
 
     layer.appendChild(el);
   }
@@ -170,7 +172,7 @@ function spawnPanelHearts(){
   layer.innerHTML = "";
   const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕","💗"]);
 
-  const count = 18;
+  const count = 14;
   for (let i = 0; i < count; i++){
     const el = document.createElement("div");
     el.className = "panel-float";
@@ -197,6 +199,60 @@ function spawnPanelHearts(){
   }
 }
 
+/* Floating hearts INSIDE memories div */
+function mountMemFloatLayer(){
+  const root = $("memories");
+  if (!root) return null;
+
+  let layer = root.querySelector(".mem-float-layer");
+  if (!layer){
+    layer = document.createElement("div");
+    layer.className = "mem-float-layer";
+    root.prepend(layer);
+  }
+  return layer;
+}
+
+function spawnMemHearts(){
+  if (!motionOk()) return;
+
+  const root = $("memories");
+  if (!root || !root.innerHTML.trim()) return;
+
+  const layer = mountMemFloatLayer();
+  if (!layer) return;
+
+  layer.innerHTML = "";
+  const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕","💗"]);
+
+  const count = 20;
+  for (let i = 0; i < count; i++){
+    const el = document.createElement("div");
+    el.className = "mem-float";
+    el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+
+    const x = Math.floor(Math.random()*100);
+    const dx = (Math.random()*2 - 1) * 90;
+    const t = (5 + Math.random()*6).toFixed(2) + "s";
+    const s = (14 + Math.random()*20).toFixed(0) + "px";
+    const delay = (-Math.random()*7).toFixed(2) + "s";
+
+    const h = Math.floor(Math.random()*360) + "deg";
+    const hc = (2.8 + Math.random()*4.5).toFixed(2) + "s";
+
+    el.style.setProperty("--x", x + "%");
+    el.style.setProperty("--dx", dx.toFixed(0) + "px");
+    el.style.setProperty("--t", t);
+    el.style.setProperty("--s", s);
+    el.style.setProperty("--h", h);
+    el.style.setProperty("--hc", hc);
+    el.style.animationDelay = delay;
+
+    layer.appendChild(el);
+  }
+}
+
+/* Memories renderer */
 function renderMemories(stepKey) {
   const mem = window.config.memories?.[stepKey];
   const root = $("memories");
@@ -363,5 +419,6 @@ function setupMusic() {
 
 applyTheme();
 spawnFloaters();
+spawnHeroHearts();
 setupMusic();
 renderStep();
