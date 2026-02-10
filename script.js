@@ -22,6 +22,7 @@ function applyTheme() {
   $("heroSub").textContent = `${c.valentineName} ❤️`;
 }
 
+/* Background floaters (whole page) */
 function spawnFloaters() {
   const layer = $("floatLayer");
   if (!layer) return;
@@ -52,6 +53,7 @@ function spawnFloaters() {
   }
 }
 
+/* Confetti / heart burst */
 function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","✨"] }){
   if (!motionOk()) return;
   const layer = $("fxLayer");
@@ -87,7 +89,7 @@ function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","�
   }
 }
 
-/* HERO hearts: now uses #heroFloatLayer directly */
+/* HERO hearts (center-focused) */
 function spawnHeroHearts(){
   if (!motionOk()) return;
 
@@ -97,21 +99,23 @@ function spawnHeroHearts(){
   layer.innerHTML = "";
   const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕","💗"]);
 
-  const count = 18;
+  const count = 20;
   for (let i = 0; i < count; i++){
     const el = document.createElement("div");
     el.className = "hero-float";
     el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
 
-    const x = Math.floor(Math.random()*100);
-    const y = Math.floor(Math.random()*100);
+    const x = Math.floor(15 + Math.random()*70);
+    const y = Math.floor(10 + Math.random()*80);
+
     const dx = (Math.random()*2 - 1) * 26;
     const dy = (Math.random()*2 - 1) * 18;
-    const t = (2.8 + Math.random()*2.8).toFixed(2) + "s";
+
+    const t = (3.6 + Math.random()*3.6).toFixed(2) + "s";
     const s = (16 + Math.random()*22).toFixed(0) + "px";
 
     const h = Math.floor(Math.random()*360) + "deg";
-    const hc = (2.4 + Math.random()*4.0).toFixed(2) + "s";
+    const hc = (3.2 + Math.random()*4.6).toFixed(2) + "s";
 
     el.style.setProperty("--x", x + "%");
     el.style.setProperty("--y", y + "%");
@@ -126,7 +130,7 @@ function spawnHeroHearts(){
   }
 }
 
-/* Panel hearts */
+/* Panel hearts helpers */
 function mountPanelFloatLayer(){
   const panel = $("panel");
   if (!panel) return null;
@@ -140,6 +144,7 @@ function mountPanelFloatLayer(){
   return layer;
 }
 
+/* Panel hearts (UPDATED: side-biased so text stays clear) */
 function spawnPanelHearts(){
   if (!motionOk()) return;
   const panel = $("panel");
@@ -157,14 +162,18 @@ function spawnPanelHearts(){
     el.className = "panel-float";
     el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
 
-    const x = Math.floor(Math.random()*100);
-    const dx = (Math.random()*2 - 1) * 80;
-    const t = (4.8 + Math.random()*5.5).toFixed(2) + "s";
-    const s = (14 + Math.random()*18).toFixed(0) + "px";
+    // side-biased: keep center readable
+    const x = Math.random() < 0.5
+      ? Math.floor(Math.random()*18)          // 0–18% left
+      : Math.floor(82 + Math.random()*18);    // 82–100% right
+
+    const dx = (Math.random()*2 - 1) * 60;    // less drift to avoid crossing center
+    const t = (5.2 + Math.random()*5.8).toFixed(2) + "s";
+    const s = (13 + Math.random()*16).toFixed(0) + "px";
     const delay = (-Math.random()*6).toFixed(2) + "s";
 
     const h = Math.floor(Math.random()*360) + "deg";
-    const hc = (2.6 + Math.random()*4.2).toFixed(2) + "s";
+    const hc = (3.0 + Math.random()*4.0).toFixed(2) + "s";
 
     el.style.setProperty("--x", x + "%");
     el.style.setProperty("--dx", dx.toFixed(0) + "px");
@@ -178,7 +187,7 @@ function spawnPanelHearts(){
   }
 }
 
-/* Memories hearts */
+/* Memories hearts helpers */
 function mountMemFloatLayer(){
   const root = $("memories");
   if (!root) return null;
@@ -332,8 +341,7 @@ function renderStep() {
     };
 
     $("no3").onclick = () => {
-      const n = $("noNote");
-      n.textContent = "एक पटक फेरि सोच न... 🥺";
+      $("noNote").textContent = "एक पटक फेरि सोच न... 🥺";
       const btn = $("no3");
       btn.style.transform = `translate(${(Math.random()*140-70).toFixed(0)}px, ${(Math.random()*70-35).toFixed(0)}px)`;
     };
@@ -373,7 +381,6 @@ function setupMusic() {
   btn.textContent = m.startText;
 
   let playing = false;
-
   async function play() {
     try { await audio.play(); playing = true; btn.textContent = m.stopText; } catch {}
   }
@@ -388,6 +395,6 @@ function setupMusic() {
 
 applyTheme();
 spawnFloaters();
-spawnHeroHearts();   // <-- NOW guaranteed because layer exists in index.html
+spawnHeroHearts();
 setupMusic();
 renderStep();
