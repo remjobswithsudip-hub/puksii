@@ -54,6 +54,7 @@ function spawnFloaters() {
   }
 }
 
+/* Confetti / heart burst */
 function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","✨"] }){
   if (!motionOk()) return;
 
@@ -116,7 +117,7 @@ function spawnMemHearts(){
   layer.innerHTML = "";
   const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕","💗"]);
 
-  const count = 26; // richer inside quote div
+  const count = 26;
   for (let i = 0; i < count; i++){
     const el = document.createElement("div");
     el.className = "mem-float";
@@ -130,6 +131,59 @@ function spawnMemHearts(){
 
     const h = Math.floor(Math.random()*360) + "deg";
     const hc = (2.8 + Math.random()*4.5).toFixed(2) + "s";
+
+    el.style.setProperty("--x", x + "%");
+    el.style.setProperty("--dx", dx.toFixed(0) + "px");
+    el.style.setProperty("--t", t);
+    el.style.setProperty("--s", s);
+    el.style.setProperty("--h", h);
+    el.style.setProperty("--hc", hc);
+    el.style.animationDelay = delay;
+
+    layer.appendChild(el);
+  }
+}
+
+/* Floating hearts INSIDE question panel */
+function mountPanelFloatLayer(){
+  const panel = $("panel");
+  if (!panel) return null;
+
+  let layer = panel.querySelector(".panel-float-layer");
+  if (!layer){
+    layer = document.createElement("div");
+    layer.className = "panel-float-layer";
+    panel.prepend(layer);
+  }
+  return layer;
+}
+
+function spawnPanelHearts(){
+  if (!motionOk()) return;
+
+  const panel = $("panel");
+  if (!panel || !panel.innerHTML.trim()) return;
+
+  const layer = mountPanelFloatLayer();
+  if (!layer) return;
+
+  layer.innerHTML = "";
+  const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕","💗"]);
+
+  const count = 18;
+  for (let i = 0; i < count; i++){
+    const el = document.createElement("div");
+    el.className = "panel-float";
+    el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+
+    const x = Math.floor(Math.random()*100);
+    const dx = (Math.random()*2 - 1) * 80;
+    const t = (4.8 + Math.random()*5.5).toFixed(2) + "s";
+    const s = (14 + Math.random()*18).toFixed(0) + "px";
+    const delay = (-Math.random()*6).toFixed(2) + "s";
+
+    const h = Math.floor(Math.random()*360) + "deg";
+    const hc = (2.6 + Math.random()*4.2).toFixed(2) + "s";
 
     el.style.setProperty("--x", x + "%");
     el.style.setProperty("--dx", dx.toFixed(0) + "px");
@@ -202,6 +256,7 @@ function renderStep() {
     };
 
     renderMemories("first");
+    spawnPanelHearts();
   }
 
   if (state.step === "second") {
@@ -224,6 +279,7 @@ function renderStep() {
     $("next2").onclick = () => { state.step = "third"; renderStep(); };
 
     renderMemories("second");
+    spawnPanelHearts();
   }
 
   if (state.step === "third") {
@@ -250,6 +306,7 @@ function renderStep() {
     };
 
     renderMemories("third");
+    spawnPanelHearts();
   }
 
   if (state.step === "celebrate") {
