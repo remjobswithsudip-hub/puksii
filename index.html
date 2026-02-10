@@ -1,0 +1,23 @@
+<section id="memories" class="memories"></section>
+function renderMemories(stepKey) {
+  const mem = config.memories?.[stepKey];
+  const root = document.getElementById("memories");
+  if (!root) return;
+
+  if (!mem) { root.innerHTML = ""; return; }
+
+  const cards = (mem.items || []).map(it => `
+    <figure class="mem-card">
+      <img src="${it.img}" alt="${it.caption || ''}" loading="lazy">
+      <figcaption>${it.caption || ""}</figcaption>
+    </figure>
+  `).join("");
+
+  root.innerHTML = `
+    <div class="mem-head">
+      <h2>${mem.title || ""}</h2>
+      <p class="mem-quote">${mem.quote || ""}</p>
+    </div>
+    <div class="mem-grid">${cards}</div>
+  `;
+}
