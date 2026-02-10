@@ -138,14 +138,17 @@ body{
 
 /* Memories / Quotes block */
 .memories{
-  position: relative;              /* for inner floating hearts */
-  overflow: hidden;                /* keep hearts inside */
+  position: relative;
+  overflow: hidden;
   margin-top: 14px;
   padding: 16px;
   border-radius: 18px;
   background: var(--glass2);
   border: 1px solid rgba(255,255,255,0.26);
   backdrop-filter: blur(10px);
+
+  /* keep blend effects inside this block */
+  isolation: isolate;
 }
 
 .mem-float-layer{
@@ -163,17 +166,29 @@ body{
 .mem-float{
   position:absolute;
   left: var(--x);
-  bottom: -20px;
+  bottom: -24px;
   font-size: var(--s);
-  opacity: .55;
-  animation: memFloatUp var(--t) linear infinite;
-  filter: drop-shadow(0 10px 16px rgba(0,0,0,.10));
+  opacity: .70;
+
+  animation:
+    memFloatUp var(--t) linear infinite,
+    hueSpin var(--hc) linear infinite;
+
+  filter: hue-rotate(var(--h));
+  mix-blend-mode: screen;
+  text-shadow: 0 10px 18px rgba(0,0,0,0.18);
+  will-change: transform, opacity, filter;
 }
 
 @keyframes memFloatUp{
   0%{ transform: translateX(0) translateY(0) scale(.9); opacity: 0; }
-  10%{ opacity: .6; }
-  100%{ transform: translateX(var(--dx)) translateY(-120%) scale(1.2); opacity: 0; }
+  10%{ opacity: .85; }
+  100%{ transform: translateX(var(--dx)) translateY(-135%) scale(1.35); opacity: 0; }
+}
+
+@keyframes hueSpin{
+  0%{ filter: hue-rotate(0deg); }
+  100%{ filter: hue-rotate(360deg); }
 }
 
 .mem-head h2{ margin:0 0 6px; font-size: 18px; }
@@ -241,20 +256,4 @@ body{
   left: var(--x);
   top: var(--y);
   transform: translate(-50%, -50%);
-  font-size: var(--size);
-  opacity: 1;
-  animation: popFly var(--t) ease-out forwards;
-  filter: drop-shadow(0 10px 16px rgba(0,0,0,.16));
-  will-change: transform, opacity;
-}
-
-@keyframes popFly{
-  0%{ transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
-  10%{ opacity: 1; }
-  100%{ transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--r)) scale(1.15); opacity: 0; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  *{ animation:none !important; transition:none !important; }
-  .fx{ display:none !important; }
-}
+  font-
