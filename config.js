@@ -1,4 +1,3 @@
-// config.js
 window.config = {
   valentineName: "मेरी श्रीमती",
   pageTitle: "मेरो भ्यालेन्टाइन बनिदिन्छौ? 💝",
@@ -11,8 +10,8 @@ window.config = {
   questions: {
     first: {
       text: "तिमी मलाई मन पराउँछौ?",
-      yesBtn: "हो",
-      noBtn: "होइन",
+      yesBtn: "गर्छु नि 💖",
+      noBtn: "गर्दिनँ 😅",
       secretAnswer: "मन मात्र होइन, म तिमीलाई माया गर्छु ❤️"
     },
     second: {
@@ -75,7 +74,7 @@ window.config = {
     },
     third: {
       title: "मेरो मनका कुरा",
-      quote: "म तिमीलाई शब्दले होइन, समयले माया गर्छु।",
+      quote: "म तिमीलाई शब्दले होइन, मनले माया गर्छु।",
       items: [
         { img: "assets/07.jpg", caption: "आज पनि, भोलि पनि—तिमी नै।" },
         { img: "assets/08.jpg", caption: "मेरो खुशी।" },
