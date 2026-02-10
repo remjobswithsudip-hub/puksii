@@ -21,7 +21,6 @@ body{
   animation: bgMove 10s ease-in-out infinite;
   overflow-x:hidden;
 }
-
 @keyframes bgMove{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
@@ -30,7 +29,6 @@ body{
 
 .bg{position:fixed; inset:0; pointer-events:none;}
 .float-layer{position:absolute; inset:0; overflow:hidden;}
-
 .float{
   position:absolute;
   font-size: 22px;
@@ -52,7 +50,6 @@ body{
   justify-content:center;
   padding: 22px 14px;
 }
-
 .card{
   width:min(860px, 100%);
   border-radius: 22px;
@@ -63,38 +60,34 @@ body{
   padding: 18px;
 }
 
-/* HERO + floating around title */
+/* shared hue spin */
+@keyframes hueSpin{
+  0%{ filter: hue-rotate(0deg); }
+  100%{ filter: hue-rotate(360deg); }
+}
+
+/* HERO */
 .hero{
   position: relative;
   overflow: hidden;
   isolation: isolate;
   text-align:center;
-  padding: 10px 8px 12px;
+  padding: 12px 10px 12px;
   border-radius: 18px;
 }
-
 .hero-float-layer{
   position:absolute;
   inset:0;
   pointer-events:none;
   z-index:0;
 }
-
 .hero > *:not(.hero-float-layer){
   position: relative;
   z-index: 1;
 }
+.h1{ margin: 6px 0 6px; font-size: clamp(26px, 4vw, 42px); }
+.sub{ margin:0; opacity:.95; }
 
-.h1{ margin: 6px 0 6px; font-size: clamp(24px, 4vw, 40px); }
-.sub{ margin:0; opacity:.92; }
-
-/* Shared color spin */
-@keyframes hueSpin{
-  0%{ filter: hue-rotate(0deg); }
-  100%{ filter: hue-rotate(360deg); }
-}
-
-/* HERO floats */
 .hero-float{
   position:absolute;
   left: var(--x);
@@ -129,19 +122,16 @@ body{
   background: rgba(255,255,255,0.16);
   border: 1px solid rgba(255,255,255,0.22);
 }
-
 .panel-float-layer{
   position:absolute;
   inset:0;
   pointer-events:none;
   z-index:0;
 }
-
 .panel > *:not(.panel-float-layer){
   position: relative;
   z-index: 1;
 }
-
 .panel-float{
   position:absolute;
   left: var(--x);
@@ -158,7 +148,6 @@ body{
   text-shadow: 0 10px 18px rgba(0,0,0,0.18);
   will-change: transform, opacity, filter;
 }
-
 @keyframes panelFloatUp{
   0%{ transform: translateX(0) translateY(0) scale(.9); opacity: 0; }
   10%{ opacity: .9; }
@@ -170,14 +159,12 @@ body{
   font-size: clamp(18px, 2.4vw, 24px);
   margin: 6px 0 12px;
 }
-
 .row{
   display:flex;
   gap: 12px;
   justify-content:center;
   flex-wrap:wrap;
 }
-
 .btn{
   border:0;
   padding: 12px 18px;
@@ -185,14 +172,12 @@ body{
   background: var(--accent);
   color: #fff;
   font-weight: 700;
-  letter-spacing: .2px;
   cursor:pointer;
   transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
   box-shadow: 0 12px 26px rgba(255,46,99,.28);
 }
 .btn:hover{ background: var(--accent2); transform: scale(1.03); }
 .btn:active{ transform: scale(0.99); }
-
 .btn.alt{
   background: rgba(255,255,255,0.35);
   color: var(--text);
@@ -201,11 +186,7 @@ body{
 }
 .btn.alt:hover{ background: rgba(255,255,255,0.48); }
 
-.note{
-  text-align:center;
-  margin: 10px 0 0;
-  opacity:.95;
-}
+.note{ text-align:center; margin: 10px 0 0; opacity:.95; }
 
 .love-meter{
   margin-top: 10px;
@@ -226,7 +207,7 @@ body{
 }
 .big{ font-size: 18px; font-weight: 800; }
 
-/* MEMORIES (FIXED) */
+/* MEMORIES (photo section fixed) */
 .memories{
   position: relative;
   overflow: hidden;
@@ -238,19 +219,16 @@ body{
   backdrop-filter: blur(10px);
   isolation: isolate;
 }
-
 .mem-float-layer{
   position:absolute;
   inset:0;
   pointer-events:none;
   z-index: 0;
 }
-
 .memories > *:not(.mem-float-layer){
   position: relative;
   z-index: 1;
 }
-
 .mem-head h2{ margin:0 0 6px; font-size: 18px; }
 .mem-quote{ margin:0 0 12px; opacity:.95; }
 
@@ -260,7 +238,6 @@ body{
   gap: 12px;
   align-items: start;
 }
-
 @media (max-width: 760px){ .mem-grid{ grid-template-columns: repeat(2, 1fr);} }
 @media (max-width: 520px){ .mem-grid{ grid-template-columns: 1fr;} }
 
@@ -273,19 +250,16 @@ body{
   transition: transform .2s ease, box-shadow .2s ease;
   display: grid;
 }
-
 .mem-card:hover{
   transform: scale(1.02);
   box-shadow: 0 14px 30px rgba(0,0,0,0.14);
 }
-
 .mem-card img{
   width:100%;
   height: 190px;
   object-fit: cover;
   display:block;
 }
-
 .mem-card figcaption{
   padding: 10px 12px;
   font-size: 14px;
@@ -296,7 +270,7 @@ body{
   overflow: hidden;
 }
 
-/* MEM floats */
+/* memories float */
 .mem-float{
   position:absolute;
   left: var(--x);
@@ -313,7 +287,6 @@ body{
   text-shadow: 0 10px 18px rgba(0,0,0,0.18);
   will-change: transform, opacity, filter;
 }
-
 @keyframes memFloatUp{
   0%{ transform: translateX(0) translateY(0) scale(.9); opacity: 0; }
   10%{ opacity: .85; }
@@ -338,14 +311,13 @@ body{
 }
 .tiny{ opacity:.8; }
 
-/* FX */
+/* FX burst */
 .fx-layer{
   position: fixed;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
 }
-
 .fx{
   position: absolute;
   left: var(--x);
@@ -357,7 +329,6 @@ body{
   filter: drop-shadow(0 10px 16px rgba(0,0,0,.16));
   will-change: transform, opacity;
 }
-
 @keyframes popFly{
   0%{ transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
   10%{ opacity: 1; }
@@ -366,8 +337,5 @@ body{
 
 @media (prefers-reduced-motion: reduce){
   *{ animation:none !important; transition:none !important; }
-  .fx{ display:none !important; }
-  .mem-float{ display:none !important; }
-  .panel-float{ display:none !important; }
-  .hero-float{ display:none !important; }
+  .fx, .mem-float, .panel-float, .hero-float { display:none !important; }
 }
