@@ -67,12 +67,52 @@ body{
 .h1{ margin: 6px 0 6px; font-size: clamp(24px, 4vw, 40px); }
 .sub{ margin:0; opacity:.92; }
 
+/* PANEL */
 .panel{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
   margin-top: 10px;
   padding: 14px;
   border-radius: 18px;
   background: rgba(255,255,255,0.16);
   border: 1px solid rgba(255,255,255,0.22);
+}
+
+.panel-float-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+.panel > *:not(.panel-float-layer){
+  position: relative;
+  z-index: 1;
+}
+
+.panel-float{
+  position:absolute;
+  left: var(--x);
+  bottom: -24px;
+  font-size: var(--s);
+  opacity: .75;
+
+  animation:
+    panelFloatUp var(--t) linear infinite,
+    hueSpin var(--hc) linear infinite;
+
+  filter: hue-rotate(var(--h));
+  mix-blend-mode: screen;
+  text-shadow: 0 10px 18px rgba(0,0,0,0.18);
+  will-change: transform, opacity, filter;
+}
+
+@keyframes panelFloatUp{
+  0%{ transform: translateX(0) translateY(0) scale(.9); opacity: 0; }
+  10%{ opacity: .9; }
+  100%{ transform: translateX(var(--dx)) translateY(-135%) scale(1.35); opacity: 0; }
 }
 
 .q{
@@ -136,7 +176,7 @@ body{
 }
 .big{ font-size: 18px; font-weight: 800; }
 
-/* Memories / Quotes block */
+/* MEMORIES */
 .memories{
   position: relative;
   overflow: hidden;
@@ -147,7 +187,6 @@ body{
   border: 1px solid rgba(255,255,255,0.26);
   backdrop-filter: blur(10px);
 
-  /* keep blend effects inside this block */
   isolation: isolate;
 }
 
@@ -186,74 +225,10 @@ body{
   100%{ transform: translateX(var(--dx)) translateY(-135%) scale(1.35); opacity: 0; }
 }
 
+/* One shared color spin for both panel + memories */
 @keyframes hueSpin{
   0%{ filter: hue-rotate(0deg); }
   100%{ filter: hue-rotate(360deg); }
 }
 
-.mem-head h2{ margin:0 0 6px; font-size: 18px; }
-.mem-quote{ margin:0 0 12px; opacity:.95; }
-
-.mem-grid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-@media (max-width: 760px){ .mem-grid{ grid-template-columns: repeat(2, 1fr);} }
-@media (max-width: 520px){ .mem-grid{ grid-template-columns: 1fr;} }
-
-.mem-card{
-  margin:0;
-  overflow:hidden;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.42);
-  border: 1px solid rgba(255,255,255,0.32);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-.mem-card:hover{
-  transform: scale(1.02);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.14);
-}
-.mem-card img{
-  width:100%;
-  height: 180px;
-  object-fit: cover;
-  display:block;
-}
-.mem-card figcaption{
-  padding: 10px 12px;
-  font-size: 14px;
-}
-
-.footer{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap: 10px;
-  margin-top: 12px;
-  padding: 0 4px;
-}
-.music-btn{
-  border: 1px solid rgba(255,255,255,0.32);
-  background: rgba(255,255,255,0.30);
-  color: var(--text);
-  border-radius: 999px;
-  padding: 8px 12px;
-  cursor:pointer;
-}
-.tiny{ opacity:.8; }
-
-/* FX: Confetti / Heart burst */
-.fx-layer{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.fx{
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  transform: translate(-50%, -50%);
-  font-
+.mem-
