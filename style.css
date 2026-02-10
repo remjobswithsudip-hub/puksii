@@ -93,7 +93,7 @@ body{
   left: var(--x);
   top: var(--y);
   font-size: var(--s);
-  opacity: .85;
+  opacity: .55;
   animation:
     heroDrift var(--t) ease-in-out infinite,
     hueSpin var(--hc) linear infinite;
@@ -134,7 +134,7 @@ body{
   left: var(--x);
   bottom: -24px;
   font-size: var(--s);
-  opacity: .75;
+  opacity: .45;
   animation:
     panelFloatUp var(--t) linear infinite,
     hueSpin var(--hc) linear infinite;
@@ -270,7 +270,7 @@ body{
   left: var(--x);
   bottom: -24px;
   font-size: var(--s);
-  opacity: .70;
+  opacity: .40;
   animation:
     memFloatUp var(--t) linear infinite,
     hueSpin var(--hc) linear infinite;
