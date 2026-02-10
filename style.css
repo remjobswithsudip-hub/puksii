@@ -1,0 +1,67 @@
+body{
+  background: linear-gradient(120deg, var(--bg1), var(--bg2), #ffe6f0);
+  background-size: 200% 200%;
+  animation: bgMove 10s ease-in-out infinite;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.memories{
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.20);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.28);
+}
+
+.mem-head h2{ margin: 0 0 6px; }
+.mem-quote{ margin: 0 0 14px; opacity: .95; }
+
+.mem-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mem-card{
+  margin: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.35);
+  transform: translateZ(0);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.mem-card:hover{
+  transform: scale(1.02);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+}
+
+.mem-card img{
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.mem-card figcaption{
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+@media (max-width: 520px){
+  .mem-grid{ grid-template-columns: 1fr; }
+  .mem-card img{ height: 210px; }
+}
+
+/* accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+}
