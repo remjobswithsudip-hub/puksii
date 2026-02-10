@@ -9,10 +9,10 @@ window.config = {
 
   questions: {
     first: {
-      text: "तिमी मलाई मन पराउँछौ?",
+      text: "तिमी मलाई धेरै माया गर्छौ??",
       yesBtn: "गर्छु नि 💖",
       noBtn: "गर्दिनँ 😅",
-      secretAnswer: "मन मात्र होइन, म तिमीलाई माया गर्छु ❤️"
+      secretAnswer: "शब्दले मात्र होइन, मनले पनि तिमीलाई माया गर्छु ❤️"
     },
     second: {
       text: "तिमी मलाई कति माया गर्छौ?",
@@ -59,7 +59,7 @@ window.config = {
       quote: "साना क्षणहरू नै हाम्रो ठूलो कथा हुन्।",
       items: [
         { img: "assets/01.jpg", caption: "त्यो दिन अझै सम्झिन्छु।" },
-        { img: "assets/02.jpg", caption: "हाम्रो पहिलो कफी डेट।" },
+        { img: "assets/02.jpg", caption: "हाम्रो कफी डेट।" },
         { img: "assets/03.jpg", caption: "त्यो हाँसो...।" }
       ]
     },
