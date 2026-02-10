@@ -22,7 +22,7 @@ function applyTheme() {
   $("heroSub").textContent = `${c.valentineName} ❤️`;
 }
 
-/* Background floaters (whole page) */
+/* Background floaters */
 function spawnFloaters() {
   const layer = $("floatLayer");
   if (!layer) return;
@@ -53,7 +53,7 @@ function spawnFloaters() {
   }
 }
 
-/* Confetti / heart burst */
+/* Confetti burst */
 function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","✨"] }){
   if (!motionOk()) return;
   const layer = $("fxLayer");
@@ -89,7 +89,7 @@ function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","�
   }
 }
 
-/* HERO hearts (center-focused) */
+/* HERO hearts */
 function spawnHeroHearts(){
   if (!motionOk()) return;
 
@@ -107,7 +107,6 @@ function spawnHeroHearts(){
 
     const x = Math.floor(15 + Math.random()*70);
     const y = Math.floor(10 + Math.random()*80);
-
     const dx = (Math.random()*2 - 1) * 26;
     const dy = (Math.random()*2 - 1) * 18;
 
@@ -130,7 +129,7 @@ function spawnHeroHearts(){
   }
 }
 
-/* Panel hearts helpers */
+/* Panel hearts */
 function mountPanelFloatLayer(){
   const panel = $("panel");
   if (!panel) return null;
@@ -144,7 +143,6 @@ function mountPanelFloatLayer(){
   return layer;
 }
 
-/* Panel hearts (UPDATED: side-biased so text stays clear) */
 function spawnPanelHearts(){
   if (!motionOk()) return;
   const panel = $("panel");
@@ -162,12 +160,11 @@ function spawnPanelHearts(){
     el.className = "panel-float";
     el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
 
-    // side-biased: keep center readable
     const x = Math.random() < 0.5
-      ? Math.floor(Math.random()*18)          // 0–18% left
-      : Math.floor(82 + Math.random()*18);    // 82–100% right
+      ? Math.floor(Math.random()*18)
+      : Math.floor(82 + Math.random()*18);
 
-    const dx = (Math.random()*2 - 1) * 60;    // less drift to avoid crossing center
+    const dx = (Math.random()*2 - 1) * 60;
     const t = (5.2 + Math.random()*5.8).toFixed(2) + "s";
     const s = (13 + Math.random()*16).toFixed(0) + "px";
     const delay = (-Math.random()*6).toFixed(2) + "s";
@@ -187,7 +184,7 @@ function spawnPanelHearts(){
   }
 }
 
-/* Memories hearts helpers */
+/* Memories hearts */
 function mountMemFloatLayer(){
   const root = $("memories");
   if (!root) return null;
@@ -286,8 +283,16 @@ function renderStep() {
 
     $("yes1").onclick = (e) => {
       burstFX({ x: e.clientX, y: e.clientY, count: 55, emojis: ["💖","❤️","✨","💕"] });
+
       $("secret").textContent = c.questions.first.secretAnswer;
-      setTimeout(() => { state.step = "second"; renderStep(); }, 650);
+
+      $("yes1").disabled = true;
+      $("no1").disabled = true;
+
+      setTimeout(() => {
+        state.step = "second";
+        renderStep();
+      }, 10000);
     };
 
     $("no1").onclick = () => {
