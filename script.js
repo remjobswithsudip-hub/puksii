@@ -114,24 +114,29 @@ function spawnMemHearts(){
   if (!layer) return;
 
   layer.innerHTML = "";
-  const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕"]);
+  const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕","💗"]);
 
-  const count = 14;
+  const count = 26; // richer inside quote div
   for (let i = 0; i < count; i++){
     const el = document.createElement("div");
     el.className = "mem-float";
     el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
 
     const x = Math.floor(Math.random()*100);
-    const dx = (Math.random()*2 - 1) * 60;
-    const t = (5 + Math.random()*5).toFixed(2) + "s";
-    const s = (14 + Math.random()*14).toFixed(0) + "px";
-    const delay = (-Math.random()*6).toFixed(2) + "s";
+    const dx = (Math.random()*2 - 1) * 90;
+    const t = (5 + Math.random()*6).toFixed(2) + "s";
+    const s = (14 + Math.random()*20).toFixed(0) + "px";
+    const delay = (-Math.random()*7).toFixed(2) + "s";
+
+    const h = Math.floor(Math.random()*360) + "deg";
+    const hc = (2.8 + Math.random()*4.5).toFixed(2) + "s";
 
     el.style.setProperty("--x", x + "%");
     el.style.setProperty("--dx", dx.toFixed(0) + "px");
     el.style.setProperty("--t", t);
     el.style.setProperty("--s", s);
+    el.style.setProperty("--h", h);
+    el.style.setProperty("--hc", hc);
     el.style.animationDelay = delay;
 
     layer.appendChild(el);
