@@ -59,7 +59,7 @@ window.config = {
       quote: "साना क्षणहरू नै हाम्रो ठूलो कथा हुन्।",
       items: [
         { img: "assets/01.jpg", caption: "त्यो दिन अझै सम्झिन्छु।" },
-        { img: "assets/02.jpg", caption: "हाम्रो कफी डेट।" },
+        { img: "assets/02.jpg", caption: "हाम्रो पहिलो कफी डेट।" },
         { img: "assets/03.jpg", caption: "त्यो हाँसो...।" }
       ]
     },
