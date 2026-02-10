@@ -1,15 +1,13 @@
-const config = {
-  // Basic
-  valentineName: "तिम्रो नाम",
+// config.js
+window.config = {
+  valentineName: "मेरी श्रीमती",
   pageTitle: "मेरो भ्यालेन्टाइन बनिदिन्छौ? 💝",
 
-  // Background floating emojis
   floatingEmojis: {
-    hearts: ['❤️','💖','💝','💕','💗'],
+    hearts: ['❤️','💖','💝','💕','💗','💓'],
     bears: ['🧸','🐻']
   },
 
-  // Questions (Nepali)
   questions: {
     first: {
       text: "तिमी मलाई मन पराउँछौ?",
@@ -29,21 +27,18 @@ const config = {
     }
   },
 
-  // Love meter messages
   loveMessages: {
     extreme: "वाऊ! यति धेरै?? 🥰💝",
     high: "अनन्तसम्म! 🚀💝",
     normal: "अझै धेरै! 🥰"
   },
 
-  // Celebration
   celebration: {
     title: "याय! म कति भाग्यमानी रहेछु...",
     message: "अब आफ्नो गिफ्ट लिन आउनु 💝",
     emojis: "🎁💖🤗💝💋❤️💕"
   },
 
-  // Premium Valentine palette
   colors: {
     backgroundStart: "#ff5f9e",
     backgroundEnd: "#ffd1dc",
@@ -52,7 +47,6 @@ const config = {
     textColor: "#9b0036"
   },
 
-  // Animation tuning
   animations: {
     floatDuration: "14s",
     floatDistance: "55px",
@@ -60,38 +54,40 @@ const config = {
     heartExplosionSize: 1.6
   },
 
-  // Memories per step (photos + quotes)
   memories: {
     first: {
       title: "हाम्रो पहिलो भेट",
       quote: "साना क्षणहरू नै हाम्रो ठूलो कथा हुन्।",
       items: [
         { img: "assets/01.jpg", caption: "त्यो दिन अझै सम्झिन्छु।" },
-        { img: "assets/02.jpg", caption: "हाम्रो पहिलो कफी डेट।" }
+        { img: "assets/02.jpg", caption: "हाम्रो पहिलो कफी डेट।" },
+        { img: "assets/03.jpg", caption: "त्यो हाँसो...।" }
       ]
     },
     second: {
       title: "हाम्रो यात्राहरू",
       quote: "जहाँ तिमी, त्यहीँ मेरो घर।",
       items: [
-        { img: "assets/03.jpg", caption: "संगै हाँसेको क्षण।" },
-        { img: "assets/04.jpg", caption: "हात समातेर सधैं।" }
+        { img: "assets/04.jpg", caption: "संगै हाँसेको क्षण।" },
+        { img: "assets/05.jpg", caption: "हात समातेर सधैं।" },
+        { img: "assets/06.jpg", caption: "यो याद सधैं।" }
       ]
     },
     third: {
       title: "मेरो मनका कुरा",
       quote: "म तिमीलाई शब्दले होइन, समयले माया गर्छु।",
       items: [
-        { img: "assets/05.jpg", caption: "आज पनि, भोलि पनि—तिमी नै।" }
+        { img: "assets/07.jpg", caption: "आज पनि, भोलि पनि—तिमी नै।" },
+        { img: "assets/08.jpg", caption: "मेरो खुशी।" },
+        { img: "assets/09.jpg", caption: "हामी।" }
       ]
     }
   },
 
-  // Music (optional)
   music: {
-    enabled: true,
-    autoplay: true,
-    musicUrl: "YOUR_CLOUDINARY_URL_HERE",
+    enabled: false,
+    autoplay: false,
+    musicUrl: "",
     startText: "🎵 संगीत बजाऊ",
     stopText: "🔇 बन्द गर",
     volume: 0.5
