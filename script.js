@@ -1,10 +1,6 @@
 const $ = (id) => document.getElementById(id);
 
-const state = {
-  step: "first",
-  noMoves: 0,
-  love: 100
-};
+const state = { step: "first", noMoves: 0, love: 100 };
 
 function motionOk(){
   return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -26,7 +22,6 @@ function applyTheme() {
   $("heroSub").textContent = `${c.valentineName} ❤️`;
 }
 
-/* Background floaters (whole page) */
 function spawnFloaters() {
   const layer = $("floatLayer");
   if (!layer) return;
@@ -57,10 +52,8 @@ function spawnFloaters() {
   }
 }
 
-/* Confetti / heart burst */
 function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","✨"] }){
   if (!motionOk()) return;
-
   const layer = $("fxLayer");
   if (!layer) return;
 
@@ -94,30 +87,17 @@ function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","�
   }
 }
 
-/* HERO floating hearts around title */
-function mountHeroFloatLayer(){
-  const hero = document.querySelector(".hero");
-  if (!hero) return null;
-
-  let layer = hero.querySelector(".hero-float-layer");
-  if (!layer){
-    layer = document.createElement("div");
-    layer.className = "hero-float-layer";
-    hero.prepend(layer);
-  }
-  return layer;
-}
-
+/* HERO hearts: now uses #heroFloatLayer directly */
 function spawnHeroHearts(){
   if (!motionOk()) return;
 
-  const layer = mountHeroFloatLayer();
+  const layer = $("heroFloatLayer");
   if (!layer) return;
 
   layer.innerHTML = "";
   const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕","💗"]);
 
-  const count = 16;
+  const count = 18;
   for (let i = 0; i < count; i++){
     const el = document.createElement("div");
     el.className = "hero-float";
@@ -146,7 +126,7 @@ function spawnHeroHearts(){
   }
 }
 
-/* Floating hearts INSIDE question panel */
+/* Panel hearts */
 function mountPanelFloatLayer(){
   const panel = $("panel");
   if (!panel) return null;
@@ -162,7 +142,6 @@ function mountPanelFloatLayer(){
 
 function spawnPanelHearts(){
   if (!motionOk()) return;
-
   const panel = $("panel");
   if (!panel || !panel.innerHTML.trim()) return;
 
@@ -199,7 +178,7 @@ function spawnPanelHearts(){
   }
 }
 
-/* Floating hearts INSIDE memories div */
+/* Memories hearts */
 function mountMemFloatLayer(){
   const root = $("memories");
   if (!root) return null;
@@ -215,7 +194,6 @@ function mountMemFloatLayer(){
 
 function spawnMemHearts(){
   if (!motionOk()) return;
-
   const root = $("memories");
   if (!root || !root.innerHTML.trim()) return;
 
@@ -252,7 +230,6 @@ function spawnMemHearts(){
   }
 }
 
-/* Memories renderer */
 function renderMemories(stepKey) {
   const mem = window.config.memories?.[stepKey];
   const root = $("memories");
@@ -398,20 +375,12 @@ function setupMusic() {
   let playing = false;
 
   async function play() {
-    try {
-      await audio.play();
-      playing = true;
-      btn.textContent = m.stopText;
-    } catch {}
+    try { await audio.play(); playing = true; btn.textContent = m.stopText; } catch {}
   }
 
   btn.onclick = () => {
     if (!playing) play();
-    else {
-      audio.pause();
-      playing = false;
-      btn.textContent = m.startText;
-    }
+    else { audio.pause(); playing = false; btn.textContent = m.startText; }
   };
 
   if (m.autoplay) play();
@@ -419,6 +388,6 @@ function setupMusic() {
 
 applyTheme();
 spawnFloaters();
-spawnHeroHearts();
+spawnHeroHearts();   // <-- NOW guaranteed because layer exists in index.html
 setupMusic();
 renderStep();
