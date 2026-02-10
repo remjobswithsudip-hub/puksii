@@ -6,6 +6,10 @@ const state = {
   love: 100
 };
 
+function motionOk(){
+  return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 function applyTheme() {
   const c = window.config;
   document.documentElement.style.setProperty("--bg1", c.colors.backgroundStart);
@@ -47,6 +51,42 @@ function spawnFloaters() {
     el.style.animationDelay = delay;
 
     layer.appendChild(el);
+  }
+}
+
+function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","✨"] }){
+  if (!motionOk()) return;
+
+  const layer = $("fxLayer");
+  if (!layer) return;
+
+  const scale = window.config.animations?.heartExplosionSize ?? 1.0;
+  const realCount = Math.round(count * Math.max(0.6, Math.min(2.2, scale)));
+
+  for (let i = 0; i < realCount; i++){
+    const p = document.createElement("div");
+    p.className = "fx";
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+    const angle = Math.random() * Math.PI * 2;
+    const power = (80 + Math.random() * 260) * scale;
+
+    const dx = Math.cos(angle) * power;
+    const dy = Math.sin(angle) * power - (80 + Math.random() * 120); // push upward
+    const r = (Math.random() * 520 - 260).toFixed(0) + "deg";
+    const t = (700 + Math.random() * 700).toFixed(0) + "ms";
+    const size = (16 + Math.random() * 18) * (0.9 + 0.25*scale);
+
+    p.style.setProperty("--x", x + "px");
+    p.style.setProperty("--y", y + "px");
+    p.style.setProperty("--dx", dx.toFixed(0) + "px");
+    p.style.setProperty("--dy", dy.toFixed(0) + "px");
+    p.style.setProperty("--r", r);
+    p.style.setProperty("--t", t);
+    p.style.setProperty("--size", size.toFixed(0) + "px");
+
+    layer.appendChild(p);
+    setTimeout(() => p.remove(), 1700);
   }
 }
 
@@ -93,7 +133,8 @@ function renderStep() {
       <p class="note" id="secret"></p>
     `;
 
-    $("yes1").onclick = () => {
+    $("yes1").onclick = (e) => {
+      burstFX({ x: e.clientX, y: e.clientY, count: 55, emojis: ["💖","❤️","✨","💕"] });
       $("secret").textContent = c.questions.first.secretAnswer;
       setTimeout(() => { state.step = "second"; renderStep(); }, 650);
     };
@@ -140,7 +181,11 @@ function renderStep() {
       <p class="note" id="noNote"></p>
     `;
 
-    $("yes3").onclick = () => { state.step = "celebrate"; renderStep(); };
+    $("yes3").onclick = (e) => {
+      burstFX({ x: e.clientX, y: e.clientY, count: 95, emojis: ["❤️","💝","💕","✨","🎉"] });
+      state.step = "celebrate";
+      renderStep();
+    };
 
     $("no3").onclick = () => {
       const n = $("noNote");
@@ -163,6 +208,11 @@ function renderStep() {
     `;
     $("again").onclick = () => { state.step = "first"; state.noMoves = 0; state.love = 100; renderStep(); };
     $("memories").innerHTML = "";
+
+    // Center burst when celebration loads
+    const cx = Math.round(window.innerWidth / 2);
+    const cy = Math.round(window.innerHeight / 2);
+    burstFX({ x: cx, y: cy, count: 120, emojis: ["❤️","💖","💝","💕","✨","🎉"] });
   }
 }
 
@@ -186,7 +236,7 @@ function setupMusic() {
       playing = true;
       btn.textContent = m.stopText;
     } catch {
-      // Autoplay may be blocked; user can click again.
+      // Autoplay can be blocked; user can click.
     }
   }
 
