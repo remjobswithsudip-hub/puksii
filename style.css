@@ -136,13 +136,44 @@ body{
 }
 .big{ font-size: 18px; font-weight: 800; }
 
+/* Memories / Quotes block */
 .memories{
+  position: relative;              /* for inner floating hearts */
+  overflow: hidden;                /* keep hearts inside */
   margin-top: 14px;
   padding: 16px;
   border-radius: 18px;
   background: var(--glass2);
   border: 1px solid rgba(255,255,255,0.26);
   backdrop-filter: blur(10px);
+}
+
+.mem-float-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index: 0;
+}
+
+.memories > *:not(.mem-float-layer){
+  position: relative;
+  z-index: 1;
+}
+
+.mem-float{
+  position:absolute;
+  left: var(--x);
+  bottom: -20px;
+  font-size: var(--s);
+  opacity: .55;
+  animation: memFloatUp var(--t) linear infinite;
+  filter: drop-shadow(0 10px 16px rgba(0,0,0,.10));
+}
+
+@keyframes memFloatUp{
+  0%{ transform: translateX(0) translateY(0) scale(.9); opacity: 0; }
+  10%{ opacity: .6; }
+  100%{ transform: translateX(var(--dx)) translateY(-120%) scale(1.2); opacity: 0; }
 }
 
 .mem-head h2{ margin:0 0 6px; font-size: 18px; }
@@ -197,9 +228,7 @@ body{
 }
 .tiny{ opacity:.8; }
 
-/* =========================
-   FX: Confetti / Heart burst
-   ========================= */
+/* FX: Confetti / Heart burst */
 .fx-layer{
   position: fixed;
   inset: 0;
