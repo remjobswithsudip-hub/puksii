@@ -292,7 +292,7 @@ function renderStep() {
       setTimeout(() => {
         state.step = "second";
         renderStep();
-      }, 2000);
+      }, 3000);
     };
 
     $("no1").onclick = () => {
