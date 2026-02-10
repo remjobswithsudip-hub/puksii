@@ -72,7 +72,7 @@ function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","�
     const power = (80 + Math.random() * 260) * scale;
 
     const dx = Math.cos(angle) * power;
-    const dy = Math.sin(angle) * power - (80 + Math.random() * 120); // push upward
+    const dy = Math.sin(angle) * power - (80 + Math.random() * 120);
     const r = (Math.random() * 520 - 260).toFixed(0) + "deg";
     const t = (700 + Math.random() * 700).toFixed(0) + "ms";
     const size = (16 + Math.random() * 18) * (0.9 + 0.25*scale);
@@ -87,6 +87,54 @@ function burstFX({ x, y, count = 60, emojis = ["❤️","💖","💝","💕","�
 
     layer.appendChild(p);
     setTimeout(() => p.remove(), 1700);
+  }
+}
+
+/* Floating hearts INSIDE memories div */
+function mountMemFloatLayer(){
+  const root = $("memories");
+  if (!root) return null;
+
+  let layer = root.querySelector(".mem-float-layer");
+  if (!layer){
+    layer = document.createElement("div");
+    layer.className = "mem-float-layer";
+    root.prepend(layer);
+  }
+  return layer;
+}
+
+function spawnMemHearts(){
+  if (!motionOk()) return;
+
+  const root = $("memories");
+  if (!root || !root.innerHTML.trim()) return;
+
+  const layer = mountMemFloatLayer();
+  if (!layer) return;
+
+  layer.innerHTML = "";
+  const hearts = (window.config.floatingEmojis?.hearts || ["❤️","💖","💝","💕"]);
+
+  const count = 14;
+  for (let i = 0; i < count; i++){
+    const el = document.createElement("div");
+    el.className = "mem-float";
+    el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+
+    const x = Math.floor(Math.random()*100);
+    const dx = (Math.random()*2 - 1) * 60;
+    const t = (5 + Math.random()*5).toFixed(2) + "s";
+    const s = (14 + Math.random()*14).toFixed(0) + "px";
+    const delay = (-Math.random()*6).toFixed(2) + "s";
+
+    el.style.setProperty("--x", x + "%");
+    el.style.setProperty("--dx", dx.toFixed(0) + "px");
+    el.style.setProperty("--t", t);
+    el.style.setProperty("--s", s);
+    el.style.animationDelay = delay;
+
+    layer.appendChild(el);
   }
 }
 
@@ -110,6 +158,8 @@ function renderMemories(stepKey) {
     </div>
     <div class="mem-grid">${cards}</div>
   `;
+
+  spawnMemHearts();
 }
 
 function loveMessage(p) {
@@ -142,7 +192,7 @@ function renderStep() {
     $("no1").onclick = () => {
       state.noMoves += 1;
       const btn = $("no1");
-      btn.textContent = state.noMoves >= 2 ? "अरे होइन 😄" : c.questions.first.noBtn;
+      btn.textContent = state.noMoves >= 2 ? "ए हैन यार 😄" : c.questions.first.noBtn;
       btn.style.transform = `translate(${(Math.random()*120-60).toFixed(0)}px, ${(Math.random()*60-30).toFixed(0)}px)`;
     };
 
@@ -209,7 +259,6 @@ function renderStep() {
     $("again").onclick = () => { state.step = "first"; state.noMoves = 0; state.love = 100; renderStep(); };
     $("memories").innerHTML = "";
 
-    // Center burst when celebration loads
     const cx = Math.round(window.innerWidth / 2);
     const cy = Math.round(window.innerHeight / 2);
     burstFX({ x: cx, y: cy, count: 120, emojis: ["❤️","💖","💝","💕","✨","🎉"] });
@@ -235,9 +284,7 @@ function setupMusic() {
       await audio.play();
       playing = true;
       btn.textContent = m.stopText;
-    } catch {
-      // Autoplay can be blocked; user can click.
-    }
+    } catch {}
   }
 
   btn.onclick = () => {
