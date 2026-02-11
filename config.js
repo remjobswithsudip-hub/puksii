@@ -1,6 +1,6 @@
 window.config = {
   valentineName: "मेरी श्रीमती",
-  pageTitle: "मेरो भ्यालेन्टाइन बनिदिन्छौ? 💝",
+  pageTitle: "मेरो भ्यालेन्टाइन मायालु 💝💝💝",
 
   floatingEmojis: {
     hearts: ['❤️','💖','💝','💕','💗','💓'],
@@ -55,11 +55,11 @@ window.config = {
 
   memories: {
     first: {
-      title: "हाम्रो पहिलो भेट",
-      quote: "साना क्षणहरू नै हाम्रो ठूलो कथा हुन्।",
+      title: "कती धेरै मिस गरेको छु तिमीलाई ",
+      quote: "साना क्षणहरू नै हाम्रो ठूलो याद हुन्।",
       items: [
         { img: "assets/01.jpg", caption: "त्यो दिन अझै सम्झिन्छु।" },
-        { img: "assets/02.jpg", caption: "हाम्रो पहिलो कफी डेट।" },
+        { img: "assets/02.jpg", caption: "हाम्रो कफी डेट।" },
         { img: "assets/03.jpg", caption: "त्यो हाँसो...।" }
       ]
     },
